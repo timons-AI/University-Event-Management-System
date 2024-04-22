@@ -59,17 +59,17 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter courses..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Events..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm border-primary"
         />
-        <Link href="/teacher/create">
+        <Link href="/leader/create-events">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2" />
-            New course
+            New Event
           </Button>
         </Link>
       </div>

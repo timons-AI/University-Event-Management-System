@@ -8,7 +8,8 @@ datasource db {
 }
 
 enum UserRole {
-  USER
+  STUDENT
+  LEADER
   ADMIN
 }
 
@@ -19,7 +20,7 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?   @db.Text
-  role          UserRole  @default(USER)
+  role          UserRole  @default(STUDENT)
   accounts      Account[]
   events        Event[]
 
@@ -49,22 +50,25 @@ model Account {
 enum EventStatus {
   DRAFT
   PUBLISHED
+  APPROVED
   ARCHIVED
+  REJECTED
 }
 
 model Event {
   id          String      @id @default(cuid())
   name        String
-  description String
-  date        DateTime
-  status      EventStatus
-  image       String
-  venueId     String      @map("venue_id")
+  description String?
+  date        DateTime?
+  status      EventStatus @default(DRAFT)
+  image       String?
+  price       Float?
+  venueId     String?     @map("venue_id")
   userId      String      @map("user_id")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   user        User        @relation(fields: [userId], references: [id])
-  venue       Venue       @relation(fields: [venueId], references: [id])
+  venue       Venue?      @relation(fields: [venueId], references: [id])
 
   @@map("events")
 }

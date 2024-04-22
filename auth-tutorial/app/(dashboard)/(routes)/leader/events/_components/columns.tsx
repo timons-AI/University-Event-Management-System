@@ -17,14 +17,14 @@ import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Event>[] = [
   {
-    accessorKey: "title",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Title
+          Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -54,24 +54,41 @@ export const columns: ColumnDef<Event>[] = [
     },
   },
   {
-    accessorKey: "isPublished",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Published
+          Status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const isPublished = row.getValue("isPublished") || false;
+      // PENDING , APPROVED, DRAFT, REJECTED
+      const status = row.getValue("status") as string;
+
+      // color the badge based on the status
+      const statusColor: {
+        [key: string]: string;
+        PENDING: string;
+        APPROVED: string;
+        DRAFT: string;
+        REJECTED: string;
+        ARCHIVED: string;
+      } = {
+        PENDING: "bg-slate-500",
+        APPROVED: "bg-sky-700",
+        DRAFT: "bg-slate-500",
+        REJECTED: "bg-red-500",
+        ARCHIVED: "bg-slate-500",
+      };
 
       return (
-        <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
-          {isPublished ? "Published" : "Draft"}
+        <Badge className={cn("bg-slate-500", statusColor[status])}>
+          {status}
         </Badge>
       );
     },
@@ -90,7 +107,7 @@ export const columns: ColumnDef<Event>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <Link href={`/teacher/courses/${id}`}>
+            <Link href={`/leader/events/${id}`}>
               <DropdownMenuItem>
                 <Pencil className="h-4 w-4 mr-2" />
                 Edit

@@ -1,5 +1,13 @@
 import * as z from "zod";
 
+export const SettingsSchema = z.object({
+  name: z.optional(z.string()),
+});
+
+export const CreateEventSchema = z.object({
+  name: z.string().min(4, { message: "Minimum 4 characters required" }),
+});
+
 export const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1, { message: "Password is required" }),

@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ToastProvider } from "@/components/providers/toaster-provider";
+
+import dynamic from "next/dynamic";
+const NextProgress = dynamic(
+  () => import("@/components/providers/next-progress"),
+  {
+    ssr: false,
+  }
+);
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NextProgress />
+        {/* <ConfettiProvider /> */}
+        <ToastProvider />
+        {children}
+      </body>
     </html>
   );
 }
