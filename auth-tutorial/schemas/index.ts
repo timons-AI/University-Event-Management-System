@@ -18,3 +18,13 @@ export const RegisterSchema = z.object({
   password: z.string().min(6, { message: "Minimum 6 characters required" }),
   name: z.string().min(1, { message: "Name is required" }),
 });
+//
+export const UpdateEventSchema = z.object({
+  name: z.optional(
+    z.string().min(4, { message: "Minimum 4 characters required" })
+  ),
+  description: z.optional(
+    z.string().min(1, { message: "Description is required" })
+  ),
+  price: z.optional(z.number().min(0, { message: "Price must be a number" })),
+});

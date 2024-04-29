@@ -1,5 +1,6 @@
 "use client";
 
+import { archiveEvent, publishEvent, unpublishEvent } from "@/actions/event";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
@@ -23,11 +24,11 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
     try {
       setIsLoading(true);
       if (isPublished) {
-        await axios.patch(`/api/courses/${eventId}/unpublish`);
+        unpublishEvent(eventId);
         toast.success("Course unpublished");
       } else {
-        await axios.patch(`/api/courses/${eventId}/publish`);
-        toast.success("Course published");
+        publishEvent(eventId);
+        toast.success("Sent for approval");
         confetti.onOpen();
       }
       router.refresh();
@@ -40,10 +41,10 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
   const onDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/courses/${eventId}`);
-      toast.success("Course deleted");
+      archiveEvent(eventId);
+      toast.success("Event archived");
       router.refresh();
-      router.push(`/teacher/courses/${eventId}`);
+      router.push(`/leader/events`);
     } catch {
       toast.error("Something went wrong");
     } finally {

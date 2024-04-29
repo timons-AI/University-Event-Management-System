@@ -20,6 +20,7 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { updateEvent } from "@/actions/event";
 
 interface TitleFormProps {
   initialData: {
@@ -45,8 +46,8 @@ export const TitleForm = ({ initialData, eventId }: TitleFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${eventId}`, values);
-      toast.success("Course updated successfully");
+      updateEvent(values, eventId);
+      toast.success("Event updated successfully");
       toggleEdit();
       router.refresh();
     } catch {
@@ -56,7 +57,7 @@ export const TitleForm = ({ initialData, eventId }: TitleFormProps) => {
   return (
     <div className=" mt-6 border bg-slate-100 rounded-md p-4">
       <div className=" font-medium flex items-center justify-between">
-        Course name
+        Event name
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <> Cancel</>
@@ -84,7 +85,7 @@ export const TitleForm = ({ initialData, eventId }: TitleFormProps) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course name</FormLabel>
+                  <FormLabel>Event name</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}

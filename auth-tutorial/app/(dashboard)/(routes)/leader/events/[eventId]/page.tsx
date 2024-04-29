@@ -1,6 +1,7 @@
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import {
+  CalendarCheck,
   CircleDollarSign,
   File,
   LayoutDashboard,
@@ -19,6 +20,7 @@ import { PriceForm } from "./_components/price-form";
 import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
+import { DateForm } from "./_components/date-form";
 
 const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
   const user = await currentUser();
@@ -48,8 +50,8 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
     event.name,
     event.description,
     event.date,
-    // event.price,
-    event.venueId,
+    event.price,
+    // event.venueId,
     // event.chapters.some((chapter) => chapter.isPublished),
   ];
 
@@ -77,7 +79,7 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
-            <h1 className="text-2xl font-medium">Course setup</h1>
+            <h1 className="text-2xl font-medium">Event setup</h1>
             <span className="text-sm text-slate-700">
               Complete all fields {completionText}
             </span>
@@ -97,39 +99,32 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
             <TitleForm initialData={event} eventId={event.id} />
             <DescriptionForm initialData={event} eventId={event.id} />
             {/* <ImageForm initialData={event} eventId={event.id} /> */}
-            None
-            <VenueForm
+
+            {/* <VenueForm
               initialData={event}
               eventId={event.id}
               options={venues.map((venue) => ({
                 label: venue.name,
                 value: venue.id,
               }))}
-            />
+            /> */}
           </div>
           <div className="space-y-6">
             <div>
               <div className="flex items-center gap-x-2">
-                <IconBadge icon={ListChecks} />
-                <h2 className="text-xl">Course chapters</h2>
-              </div>
-              {/* <ChaptersForm initialData={event} eventId={event.id} /> */}
-              None
-            </div>
-            <div>
-              <div className="flex items-center gap-x-2">
                 <IconBadge icon={CircleDollarSign} />
-                <h2 className="text-xl">Sell your event</h2>
+                <h2 className="text-xl">Set Price for event</h2>
               </div>
               <PriceForm initialData={event} eventId={event.id} />
             </div>
             <div>
               <div className="flex items-center gap-x-2">
-                <IconBadge icon={File} />
-                <h2 className="text-xl">Resources & Attachments</h2>
+                <IconBadge icon={CalendarCheck} />
+                <h2 className="text-xl">
+                  Set a Date at which the event will occur
+                </h2>
               </div>
-              {/* <AttachmentForm initialData={event} eventId={event.id} /> */}
-              None
+              <DateForm initialData={event} eventId={event.id} />
             </div>
           </div>
         </div>

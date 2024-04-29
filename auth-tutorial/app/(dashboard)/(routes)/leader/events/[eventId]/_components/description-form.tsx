@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import { updateEvent } from "@/actions/event";
 
 interface DescriptionFormProps {
   initialData: Event;
@@ -53,7 +54,7 @@ export const DescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${eventId}`, values);
+      updateEvent(values, eventId);
       toast.success("Event updated");
       toggleEdit();
       router.refresh();

@@ -15,24 +15,36 @@ import {
   FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { formatPrice } from "@/lib/formats";
+
 import { updateEvent } from "@/actions/event";
 
-interface PriceFormProps {
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+interface DateFormProps {
   initialData: Event;
   eventId: string;
 }
 
 const formSchema = z.object({
   price: z.coerce.number(),
+  date: z.date().optional(),
 });
 
-export const PriceForm = ({ initialData, eventId }: PriceFormProps) => {
+export const DateForm = ({ initialData, eventId }: DateFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -43,6 +55,7 @@ export const PriceForm = ({ initialData, eventId }: PriceFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       price: initialData?.price || undefined,
+      date: initialData?.date || undefined,
     },
   });
 
@@ -62,14 +75,14 @@ export const PriceForm = ({ initialData, eventId }: PriceFormProps) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Event Price
+        Event Date
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Price
+              Edit Date
             </>
           )}
         </Button>
@@ -78,10 +91,10 @@ export const PriceForm = ({ initialData, eventId }: PriceFormProps) => {
         <p
           className={cn(
             "text-sm mt-2",
-            !initialData.price && "text-slate-500 italic"
+            !initialData.date && "text-slate-500 italic"
           )}
         >
-          {initialData.price ? formatPrice(initialData.price) : "No price set"}
+          {initialData.date ? format(initialData.date, "PPP") : "Not set"}
         </p>
       )}
       {isEditing && (
@@ -92,20 +105,47 @@ export const PriceForm = ({ initialData, eventId }: PriceFormProps) => {
           >
             <FormField
               control={form.control}
-              name="price"
+              name="date"
               render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      disabled={isSubmitting}
-                      placeholder=" Set a price for your event "
-                      {...field}
-                    />
-                  </FormControl>
+                <FormItem className="flex flex-col">
+                  <FormLabel>Event Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          // date > new Date() || date < new Date("1900-01-01")
+                          // disable dates before today
+                          date < new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    Select the date at which the event will occur
+                  </FormDescription>
                   <FormMessage />
-                  <FormDescription>Set 0 for a free event.</FormDescription>
                 </FormItem>
               )}
             />

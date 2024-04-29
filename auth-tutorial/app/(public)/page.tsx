@@ -16,9 +16,11 @@ export default function Home() {
             font.className
           )}
         >
-          🔐Auth
+          🔐Boooooo🔐
         </h1>
-        <p className=" text-white text-lg">A simple auth service</p>
+        <p className=" text-white text-lg">
+          Your boos mean nothing to me, I've seen what makes them cheer
+        </p>
         <div>
           <LoginButton>
             <Button variant="secondary">Sign in</Button>

@@ -2,7 +2,7 @@
 import * as z from "zod";
 
 import { db } from "@/lib/db";
-import { CreateEventSchema } from "@/schemas";
+import { CreateEventSchema, UpdateEventSchema } from "@/schemas";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 
@@ -33,4 +33,164 @@ export const createEvent = async (
   });
 
   return { data: event };
+};
+
+export const publishEvent = async (eventId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  const event = await db.event.findUnique({
+    where: {
+      id: eventId,
+    },
+  });
+
+  if (!event) {
+    return { error: "Event not found" };
+  }
+
+  if (event.userId !== dbUser.id) {
+    return { error: "Unauthorized" };
+  }
+
+  const updatedEvent = await db.event.update({
+    where: {
+      id: eventId,
+    },
+    data: {
+      status: "PUBLISHED",
+    },
+  });
+
+  return { data: updatedEvent };
+};
+
+export const unpublishEvent = async (eventId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  const event = await db.event.findUnique({
+    where: {
+      id: eventId,
+    },
+  });
+
+  if (!event) {
+    return { error: "Event not found" };
+  }
+
+  if (event.userId !== dbUser.id) {
+    return { error: "Unauthorized" };
+  }
+
+  const updatedEvent = await db.event.update({
+    where: {
+      id: eventId,
+    },
+    data: {
+      status: "DRAFT",
+    },
+  });
+
+  return { data: updatedEvent };
+};
+
+export const archiveEvent = async (eventId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  const event = await db.event.findUnique({
+    where: {
+      id: eventId,
+    },
+  });
+
+  if (!event) {
+    return { error: "Event not found" };
+  }
+
+  if (event.userId !== dbUser.id) {
+    return { error: "Unauthorized" };
+  }
+
+  const updatedEvent = await db.event.update({
+    where: {
+      id: eventId,
+    },
+    data: {
+      status: "ARCHIVED",
+    },
+  });
+
+  return { data: updatedEvent };
+};
+
+export const updateEvent = async (
+  values: z.infer<typeof UpdateEventSchema>,
+  eventId: string
+) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+  console.log(values);
+
+  const event = await db.event.findUnique({
+    where: {
+      id: eventId,
+    },
+  });
+
+  if (!event) {
+    return { error: "Event not found" };
+  }
+
+  if (event.userId !== dbUser.id) {
+    return { error: "Unauthorized" };
+  }
+
+  const updatedEvent = await db.event.update({
+    where: {
+      id: eventId,
+    },
+    data: {
+      ...values,
+    },
+  });
+
+  return { data: updatedEvent };
 };
