@@ -1,12 +1,15 @@
 import { LoginButton } from "@/components/auth/login-button";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { currentRole } from "@/lib/auth";
 import { Poppins } from "next/font/google";
+import { RoleGate } from "@/components/auth/role-gate";
 const font = Poppins({
   subsets: ["latin"],
   weight: ["600"],
 });
 export default function Home() {
+  const role = currentRole();
   return (
     <main className=" flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
       <div className=" space-y-6 text-center">
@@ -16,11 +19,16 @@ export default function Home() {
             font.className
           )}
         >
-          🔐Boooooo🔐
+          🔐 Current role is <p className=" text-4xl">{role}</p>
         </h1>
         <p className=" text-white text-lg">
-          Your boos mean nothing to me, I've seen what makes them cheer
+          This page is public and does not require authentication.
         </p>
+        <RoleGate role="ADMIN">
+          <p className=" text-white text-lg">
+            This content is only visible to admins.
+          </p>
+        </RoleGate>
         <div>
           <LoginButton>
             <Button variant="secondary">Sign in</Button>

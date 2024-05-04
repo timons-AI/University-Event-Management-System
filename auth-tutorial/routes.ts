@@ -3,7 +3,7 @@
  * These routes are accessible without authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/"]; // eg   "/guest/listing", "/guest/another-page"
 
 /**
  * An array of routes thar are used for authentication

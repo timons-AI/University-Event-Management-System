@@ -1,29 +1,21 @@
 "use client";
-import { settings } from "@/actions/settings";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { useTransition } from "react";
+import { logout } from "@/actions/logout";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-const SettingsPage = async () => {
-  const [isPending, startTransition] = useTransition();
+const SettingsPage = () => {
+  const session = useCurrentUser();
   const onClick = () => {
-    startTransition(() => {
-      settings({
-        name: "New Name!",
-      });
-    });
+    logout;
   };
   return (
-    <Card className=" w-[600px]">
-      <CardHeader>
-        <p className=" text-2xl font-semibold text-center">Settings !!</p>
-      </CardHeader>
-      <CardContent>
-        <Button disabled={isPending} onClick={onClick}>
-          Update Name
-        </Button>
-      </CardContent>
-    </Card>
+    <div>
+      {JSON.stringify(session, null, 2)}
+      <form>
+        <button onClick={onClick} type="submit">
+          Sign out
+        </button>
+      </form>
+    </div>
   );
 };
 

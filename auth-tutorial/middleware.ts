@@ -12,11 +12,13 @@ import {
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-
+  // const admin = req.auth?.role === "ADMIN";
+  // regex for "/guest/.*" is used to check if the route is a guest route
+  const guests = /^\/guest(\/.*)?/.test(nextUrl.pathname);
+  console.log("Session", req);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || guests;
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
   if (isApiAuthRoute) {
     return null;
   }
@@ -37,5 +39,5 @@ export default auth((req) => {
 
 // Optionally, don't invoke middleware on some paths
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"], // eg
 };
