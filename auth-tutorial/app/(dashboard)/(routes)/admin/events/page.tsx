@@ -1,22 +1,33 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-const Events = async () => {
+import { db } from "@/lib/db";
+
+import { DataTable } from "./_components/data-table";
+import { columns } from "./_components/columns";
+
+const EventsPage = async () => {
   const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId) {
+    return redirect("/");
+  }
+
+  const events = await db.event.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
-    <div>
-      Events {JSON.stringify(session)}
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
-      >
-        <button className=" p-4 border bg-black text-white" type="submit">
-          Signout
-        </button>
-      </form>
+    <div className="p-6">
+      <DataTable columns={columns} data={events} />
     </div>
   );
 };
 
-export default Events;
+export default EventsPage;
