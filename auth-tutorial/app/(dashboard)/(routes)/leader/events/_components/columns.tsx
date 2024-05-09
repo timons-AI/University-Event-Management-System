@@ -44,11 +44,34 @@ export const columns: ColumnDef<Event>[] = [
       );
     },
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price") || "FREE");
+      const price = parseFloat(row.getValue("price") || "Free");
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "UGX",
       }).format(price);
+
+      return <div>{formatted === "UGXNaN" ? "FREE" : formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const date = row.getValue("date") as Date;
+      const formatted = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(date);
 
       return <div>{formatted}</div>;
     },

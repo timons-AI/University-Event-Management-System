@@ -1,6 +1,6 @@
 "use client";
 
-import { Event } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
 import Link from "next/link";
@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-export const columns: ColumnDef<Event>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -29,91 +29,42 @@ export const columns: ColumnDef<Event>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      return <div>{row.getValue("name")}</div>;
+    },
   },
   {
-    accessorKey: "price",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Price
+          Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price") || "Free");
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "UGX",
-      }).format(price);
-
-      return <div>{formatted === "UGXNaN" ? "FREE" : formatted}</div>;
+      return <div>{row.getValue("email")}</div>;
     },
   },
   {
-    accessorKey: "date",
+    accessorKey: "role",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Date
+          Role
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const date = row.getValue("date") as Date;
-      const formatted = new Intl.DateTimeFormat("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(date);
-
-      return <div>{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      // PENDING , APPROVED, DRAFT, REJECTED
-      const status = row.getValue("status") as string;
-
-      // color the badge based on the status
-      const statusColor: {
-        [key: string]: string;
-        PENDING: string;
-        APPROVED: string;
-        DRAFT: string;
-        REJECTED: string;
-        ARCHIVED: string;
-      } = {
-        PENDING: "bg-slate-500",
-        APPROVED: "bg-sky-700",
-        DRAFT: "bg-slate-500",
-        REJECTED: "bg-red-500",
-        ARCHIVED: "bg-slate-500",
-      };
-
-      return (
-        <Badge className={cn("bg-slate-500", statusColor[status])}>
-          {status}
-        </Badge>
-      );
+      return <div>{row.getValue("role")}</div>;
     },
   },
   {
@@ -130,7 +81,7 @@ export const columns: ColumnDef<Event>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <Link href={`/admin/events/${id}`}>
+            <Link href={`/admin/leaders/${id}`}>
               <DropdownMenuItem>
                 <Pencil className="h-4 w-4 mr-2" />
                 Edit

@@ -1,7 +1,7 @@
 "use client";
 
 import { adminPublishEvent } from "@/actions/admin";
-import { archiveEvent, publishEvent, unpublishEvent } from "@/actions/event";
+import { archiveEvent, publishEvent, unpublishEvent } from "@/actions/admin";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
@@ -13,11 +13,11 @@ import toast from "react-hot-toast";
 
 interface ActionsProps {
   disabled: boolean;
-  eventId: string;
+  leaderId: string;
   isPublished: boolean;
 }
 
-export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
+export const Actions = ({ disabled, leaderId, isPublished }: ActionsProps) => {
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -25,10 +25,10 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
     try {
       setIsLoading(true);
       if (isPublished) {
-        unpublishEvent(eventId);
+        unpublishEvent(leaderId);
         toast.success("Event unpublished");
       } else {
-        adminPublishEvent(eventId);
+        adminPublishEvent(leaderId);
         toast.success("Event is now Live!");
         confetti.onOpen();
       }
@@ -42,10 +42,10 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
   const onDelete = async () => {
     try {
       setIsLoading(true);
-      archiveEvent(eventId);
+      archiveEvent(leaderId);
       toast.success("Event archived");
       router.refresh();
-      router.push(`/leader/events`);
+      router.push(`/leader/leaders`);
     } catch {
       toast.error("Something went wrong");
     } finally {

@@ -15,9 +15,6 @@ const EventsPage = async () => {
   }
 
   const events = await db.event.findMany({
-    where: {
-      userId,
-    },
     orderBy: {
       createdAt: "desc",
     },

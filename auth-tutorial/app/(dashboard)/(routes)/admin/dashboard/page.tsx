@@ -7,7 +7,7 @@ import { redirect } from "next/dist/server/api-utils";
 const Admin = async () => {
   const events = await db.event.findMany({
     where: {
-      status: "PUBLISHED",
+      status: "PENDING",
     },
   });
 

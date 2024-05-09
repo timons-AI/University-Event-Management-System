@@ -25,7 +25,7 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
       setIsLoading(true);
       if (isPublished) {
         unpublishEvent(eventId);
-        toast.success("Course unpublished");
+        toast.success("Event unpublished");
       } else {
         publishEvent(eventId);
         toast.success("Sent for approval");

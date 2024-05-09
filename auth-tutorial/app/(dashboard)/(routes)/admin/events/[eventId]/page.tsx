@@ -32,7 +32,6 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
   const event = await db.event.findUnique({
     where: {
       id: params.eventId,
-      userId: user.id,
     },
   });
 
@@ -62,6 +61,11 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
 
   const isComplete = requiredFields.every(Boolean);
 
+  const formatted = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(event.date);
+
   return (
     <>
       {event.status === "DRAFT" && (
@@ -79,53 +83,57 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
-            <h1 className="text-2xl font-medium">Event setup</h1>
+            <h1 className="text-2xl font-medium">Event</h1>
             <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
+              Review and update the event status {completionText}
             </span>
           </div>
           <Actions
             disabled={!isComplete}
             eventId={params.eventId}
-            isPublished={event.status === "PUBLISHED"}
+            isPublished={
+              event.status === "PENDING" || event.status === "PUBLISHED"
+            }
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your event</h2>
-            </div>
-            <TitleForm initialData={event} eventId={event.id} />
-            <DescriptionForm initialData={event} eventId={event.id} />
-            {/* <ImageForm initialData={event} eventId={event.id} /> */}
-
-            {/* <VenueForm
-              initialData={event}
-              eventId={event.id}
-              options={venues.map((venue) => ({
-                label: venue.name,
-                value: venue.id,
-              }))}
-            /> */}
+        {/* Event View Page */}
+        <div className="p-6">
+          <div className="flex items-center gap-x-2 mt-6">
+            <IconBadge icon={File} />
+            <h2 className="text-xl">Event Name</h2>
           </div>
-          <div className="space-y-6">
+          <p className="text-slate-700">{event.name}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <div>
               <div className="flex items-center gap-x-2">
-                <IconBadge icon={CircleDollarSign} />
-                <h2 className="text-xl">Set Price for event</h2>
+                <IconBadge icon={File} />
+                <h2 className="text-xl">Event Description</h2>
               </div>
-              <PriceForm initialData={event} eventId={event.id} />
+              <p className="text-slate-700">{event.description}</p>
             </div>
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={CalendarCheck} />
-                <h2 className="text-xl">
-                  Set a Date at which the event will occur
-                </h2>
+                <h2 className="text-xl">Event Date</h2>
               </div>
-              <DateForm initialData={event} eventId={event.id} />
+
+              <p className="text-slate-700">{formatted}</p>
             </div>
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={CircleDollarSign} />
+                <h2 className="text-xl">Event Price</h2>
+              </div>
+              <p className="text-slate-700">{event.price}</p>
+            </div>
+            {/* <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Venue} />
+              <h2 className="text-xl">Event Venue</h2>
+            </div>
+            <p className="text-slate-700">{event.venueId}</p>
+          </div> */}
           </div>
         </div>
       </div>

@@ -67,7 +67,7 @@ export const publishEvent = async (eventId: string) => {
       id: eventId,
     },
     data: {
-      status: "PUBLISHED",
+      status: "PENDING",
     },
   });
 
