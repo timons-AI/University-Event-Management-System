@@ -18,7 +18,7 @@ const ListingPage = async () => {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 p-4 bg-gradient-to-r from-green-200 to-yellow-200 w-full h-full">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 p-4 bg-gradient-to-r bg-white pt-24 w-full h-full">
       {listings.map((listing) => (
         <div
           key={listing.id}

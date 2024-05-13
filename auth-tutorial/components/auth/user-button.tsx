@@ -27,19 +27,25 @@ export const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className=" w-40" align="end">
-        {user && (
+        {user ? (
+          <>
+            <DropdownMenuItem>
+              <DashboardIcon className="w-5 h-5 mr-2" />
+              <Link href="/dashboard">Dashboard</Link>
+            </DropdownMenuItem>
+
+            <LogoutButton>
+              <DropdownMenuItem>
+                <ExitIcon className="w-5 h-5 mr-2" />
+                Logout
+              </DropdownMenuItem>
+            </LogoutButton>
+          </>
+        ) : (
           <DropdownMenuItem>
-            <DashboardIcon className="w-5 h-5 mr-2" />
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/login">Login</Link>
           </DropdownMenuItem>
         )}
-
-        <LogoutButton>
-          <DropdownMenuItem>
-            <ExitIcon className="w-5 h-5 mr-2" />
-            Logout
-          </DropdownMenuItem>
-        </LogoutButton>
       </DropdownMenuContent>
     </DropdownMenu>
   );

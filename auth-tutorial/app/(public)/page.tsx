@@ -37,7 +37,7 @@ export default function LandingPage() {
             aria-hidden="true"
           >
             <div
-              className="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+              className="aspect-[801/1036] w-[50.0625rem] bg-white"
               style={{
                 clipPath:
                   "polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)",
@@ -58,16 +58,16 @@ export default function LandingPage() {
                   </p>
                   <div className="mt-10 flex items-center gap-x-6">
                     <a
-                      href="/listing"
-                      className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      href="/dashboard"
+                      className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       Get started
                     </a>
                     <a
-                      href="/guest"
+                      href="/listing"
                       className="text-sm font-semibold leading-6 text-gray-900"
                     >
-                      Live demo <span aria-hidden="true">→</span>
+                      View Events <span aria-hidden="true">→</span>
                     </a>
                   </div>
                 </div>

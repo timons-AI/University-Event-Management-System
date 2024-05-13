@@ -2,22 +2,30 @@
 
 import { UserButton } from "@/components/auth/user-button";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className=" bg-secondary flex justify-between items-center p-4 rounded-xl w-[600px] shadow-sm">
-      <div className="flex gap-x-2">
+    <nav className=" bg-secondary flex justify-between items-center p-4 w-full shadow-sm">
+      <Image
+        className="h-10 w-auto"
+        src="/logo.jpg"
+        width={40}
+        height={40}
+        alt="ISEM LOGO"
+      />
+      <div className="flex justify items-center gap-x-4">
         <Button asChild variant={pathname === "/" ? "default" : "outline"}>
           <Link href="/">Home</Link>
         </Button>
         <Button
           asChild
-          variant={pathname === "/listings" ? "default" : "outline"}
+          variant={pathname === "/listing" ? "default" : "outline"}
         >
-          <Link href="/listings">Listings</Link>
+          <Link href="/listing">Listings</Link>
         </Button>
       </div>
       <UserButton />
