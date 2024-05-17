@@ -1,7 +1,13 @@
 import { Navbar } from "./_components/navbar";
 import { Sidebar } from "./_components/sidebar";
+import { currentRole } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  const role = await currentRole();
+  if (!role) {
+    redirect("/auth/login");
+  }
   return (
     <div className=" h-full">
       <div className=" h-[50px] inset-y-0 w-full fixed  z-50">

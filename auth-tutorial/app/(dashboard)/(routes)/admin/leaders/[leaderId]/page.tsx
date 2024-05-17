@@ -13,6 +13,8 @@ import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
 
 import { Actions } from "./_components/actions";
+import { UserForm } from "./_components/user-form";
+import { ComboboxForm } from "./_components/users-form";
 
 const UserDetailPage = async ({ params }: { params: { leaderId: string } }) => {
   const loggedInUser = await currentUser();
@@ -30,6 +32,12 @@ const UserDetailPage = async ({ params }: { params: { leaderId: string } }) => {
   if (!user) {
     return redirect("/");
   }
+
+  const options = [
+    { label: "Leader", value: "LEADER" },
+    { label: "Admin", value: "ADMIN" },
+    { label: "User", value: "USER" },
+  ];
 
   return (
     <>
@@ -66,6 +74,15 @@ const UserDetailPage = async ({ params }: { params: { leaderId: string } }) => {
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
                 <h2 className="text-xl">User Role</h2>
+                {/* initialData: User;
+  userId: string;
+  options: { label: string; value: string }[]; */}
+                {/* <UserForm
+                  userId={params.leaderId}
+                  initialData={user}
+                  options={options}
+                /> */}
+                <ComboboxForm />
               </div>
               <p className="text-slate-700">{user.role}</p>
             </div>
