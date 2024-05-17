@@ -13,7 +13,9 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
+// import { CommandList } from "cmdk";
 import {
   Form,
   FormControl,
@@ -28,7 +30,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { toast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 
 const languages = [
   { label: "English", value: "en" },
@@ -54,14 +56,16 @@ export function ComboboxForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    toast.success(
+      // {
+      // title: "You submitted the following values:",
+      // description: (
+      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+      </pre>
+      //   ),
+      // }
+    );
   }
 
   return (
@@ -98,25 +102,27 @@ export function ComboboxForm() {
                     <CommandInput placeholder="Search language..." />
                     <CommandEmpty>No language found.</CommandEmpty>
                     <CommandGroup>
-                      {languages.map((language) => (
-                        <CommandItem
-                          value={language.label}
-                          key={language.value}
-                          onSelect={() => {
-                            form.setValue("language", language.value);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              language.value === field.value
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {language.label}
-                        </CommandItem>
-                      ))}
+                      <CommandList>
+                        {languages.map((language) => (
+                          <CommandItem
+                            value={language.label}
+                            key={language.value}
+                            onSelect={() => {
+                              form.setValue("language", language.value);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                language.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {language.label}
+                          </CommandItem>
+                        ))}
+                      </CommandList>
                     </CommandGroup>
                   </Command>
                 </PopoverContent>

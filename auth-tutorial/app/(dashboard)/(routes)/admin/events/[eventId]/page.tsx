@@ -49,8 +49,8 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
     event.name,
     event.description,
     event.date,
-    event.price,
-    // event.venueId,
+    // event.price,
+    event.venueId,
     // event.chapters.some((chapter) => chapter.isPublished),
   ];
 
@@ -91,9 +91,7 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
           <Actions
             disabled={!isComplete}
             eventId={params.eventId}
-            isPublished={
-              event.status === "PENDING" || event.status === "PUBLISHED"
-            }
+            isPublished={event.status === "PUBLISHED"}
           />
         </div>
         {/* Event View Page */}

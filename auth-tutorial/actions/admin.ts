@@ -16,9 +16,10 @@ export const admin = async () => {
 };
 
 export const adminPublishEvent = async (eventId: string) => {
+  console.log("eventId", eventId);
   const role = await currentRole();
 
-  if (role === UserRole.ADMIN) {
+  if (role !== UserRole.ADMIN) {
     return { success: "Allowed!" };
   }
 
@@ -31,6 +32,7 @@ export const adminPublishEvent = async (eventId: string) => {
   if (!event) {
     return { error: "Event not found" };
   }
+  console.log("event", event);
 
   const updatedEvent = await db.event.update({
     where: {
@@ -40,6 +42,7 @@ export const adminPublishEvent = async (eventId: string) => {
       status: "PUBLISHED",
     },
   });
+  console.log("updatedEvent", updatedEvent);
 
   return { data: updatedEvent };
 };

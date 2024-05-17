@@ -2,7 +2,11 @@
 import * as z from "zod";
 
 import { db } from "@/lib/db";
-import { CreateEventSchema, UpdateEventSchema } from "@/schemas";
+import {
+  CreateEventSchema,
+  UpdateEventSchema,
+  UpdateUserSchema,
+} from "@/schemas";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 
@@ -76,4 +80,43 @@ export const bookEvent = async (eventId: string) => {
   });
 
   return { data: booking };
+};
+
+export const updateUser = async (
+  values: z.infer<typeof UpdateUserSchema>,
+  userId: string
+) => {
+  console.log("UPDATED USER VALUES **************************", values);
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const role = user.role;
+  if (role !== "ADMIN") {
+    return { error: "Unauthorized" };
+  }
+
+  const user_to_change = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user_to_change) {
+    return { error: "User not found" };
+  }
+
+  const updatedUser = await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      ...values,
+    },
+  });
+  console.log("UPDATED USER **************************", updatedUser);
+
+  return { data: updatedUser };
 };

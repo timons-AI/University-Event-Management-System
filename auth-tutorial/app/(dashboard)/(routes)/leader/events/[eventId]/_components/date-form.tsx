@@ -40,7 +40,6 @@ interface DateFormProps {
 }
 
 const formSchema = z.object({
-  price: z.coerce.number(),
   date: z.date().optional(),
 });
 
@@ -54,7 +53,6 @@ export const DateForm = ({ initialData, eventId }: DateFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      price: initialData?.price || undefined,
       date: initialData?.date || undefined,
     },
   });
@@ -75,7 +73,8 @@ export const DateForm = ({ initialData, eventId }: DateFormProps) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Event Date
+        Event Date:
+        {/* {JSON.stringify(initialData)} */}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -144,6 +143,11 @@ export const DateForm = ({ initialData, eventId }: DateFormProps) => {
                   </Popover>
                   <FormDescription>
                     Select the date at which the event will occur
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

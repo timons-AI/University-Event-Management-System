@@ -30,6 +30,7 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
       } else {
         adminPublishEvent(eventId);
         toast.success("Event is now Live!");
+        console.log("confetti", eventId);
         confetti.onOpen();
       }
       router.refresh();

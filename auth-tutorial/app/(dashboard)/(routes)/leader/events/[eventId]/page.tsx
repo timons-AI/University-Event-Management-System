@@ -2,10 +2,12 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import {
   CalendarCheck,
+  CalendarCheck2,
   CircleDollarSign,
   File,
   LayoutDashboard,
   ListChecks,
+  LocateIcon,
 } from "lucide-react";
 
 import { db } from "@/lib/db";
@@ -21,6 +23,7 @@ import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
 import { DateForm } from "./_components/date-form";
+import { BiLocationPlus } from "react-icons/bi";
 
 const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
   const user = await currentUser();
@@ -50,8 +53,8 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
     event.name,
     event.description,
     event.date,
-    event.price,
-    // event.venueId,
+    // event.price,
+    event.venueId,
     // event.chapters.some((chapter) => chapter.isPublished),
   ];
 
@@ -91,7 +94,7 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          <div>
+          <div className="space-y-6">
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
               <h2 className="text-xl">Customize your event</h2>
@@ -100,14 +103,20 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
             <DescriptionForm initialData={event} eventId={event.id} />
             {/* <ImageForm initialData={event} eventId={event.id} /> */}
 
-            {/* <VenueForm
-              initialData={event}
-              eventId={event.id}
-              options={venues.map((venue) => ({
-                label: venue.name,
-                value: venue.id,
-              }))}
-            /> */}
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={LocateIcon} />
+                <h2 className="text-xl">Set Locationfor event</h2>
+              </div>
+              <VenueForm
+                initialData={event}
+                eventId={event.id}
+                options={venues.map((venue) => ({
+                  label: venue.name,
+                  value: venue.id,
+                }))}
+              />
+            </div>
           </div>
           <div className="space-y-6">
             <div>

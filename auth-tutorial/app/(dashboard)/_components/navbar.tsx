@@ -7,10 +7,10 @@ import Image from "next/image";
 
 export const Navbar = () => {
   return (
-    <div className="border-b h-full flex items-center bg-white shadow-sm ">
+    <div className="border-b h-full flex items-center justify-between bg-white shadow-sm ">
       <div className=" w-64 border-r h-full bg-white hidden md:flex items-center justify-between">
         <div className="flex h-[60px] items-center border-b p-2">
-          <Link className="flex items-center  w-full" href="#">
+          <Link className="flex items-center w-full" href="#">
             <Image
               className="h-10 w-auto"
               src="/logo.jpg"
@@ -21,8 +21,10 @@ export const Navbar = () => {
           </Link>
         </div>
       </div>
-      <MobileSidebar />
-      <NavbarRoutes />
+      <div className=" w-2/3">
+        <MobileSidebar />
+        <NavbarRoutes />
+      </div>
     </div>
   );
 };

@@ -74,17 +74,15 @@ const UserDetailPage = async ({ params }: { params: { leaderId: string } }) => {
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
                 <h2 className="text-xl">User Role</h2>
-                {/* initialData: User;
-  userId: string;
-  options: { label: string; value: string }[]; */}
-                {/* <UserForm
-                  userId={params.leaderId}
-                  initialData={user}
-                  options={options}
-                /> */}
-                <ComboboxForm />
+
+                {/* <ComboboxForm />/ */}
               </div>
-              <p className="text-slate-700">{user.role}</p>
+              {/* <p className="text-slate-700">{user.role}</p> */}
+              <UserForm
+                userId={params.leaderId}
+                initialData={user}
+                options={options}
+              />
             </div>
           </div>
         </div>

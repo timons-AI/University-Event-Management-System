@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
+import { updateUser } from "@/actions/users";
 
 interface UserFormProps {
   initialData: User;
@@ -30,13 +31,11 @@ interface UserFormProps {
 }
 
 const formSchema = z.object({
-  selectedRole: z.string().min(1),
+  role: z.string().min(1),
 });
 
 export const UserForm = ({ initialData, userId }: UserFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  // Roles enum{"STUDENT":"STUDENT","LEADER":"LEADER","ADMIN":"ADMIN"} to [{label: "Student", value: "STUDENT"}, {label: "Leader", value: "LEADER"}, {label: "Admin", value: "ADMIN"}]
-
   const options = Object.keys(UserRole).map((role) => ({
     label: role,
     value: role,
@@ -49,7 +48,7 @@ export const UserForm = ({ initialData, userId }: UserFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      selectedRole: initialData?.role || "",
+      role: initialData?.role || "",
     },
   });
 
@@ -57,8 +56,14 @@ export const UserForm = ({ initialData, userId }: UserFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${userId}`, values);
-      toast.success("Something Nice happened");
+      // await axios.patch(`/api/courses/${userId}`, values);
+      updateUser(values, userId);
+      // toast.success(
+      //   <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+      //     <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+      //   </pre>
+      // );
+      toast.success("User updated successfully");
       toggleEdit();
       router.refresh();
     } catch {
@@ -103,7 +108,7 @@ export const UserForm = ({ initialData, userId }: UserFormProps) => {
           >
             <FormField
               control={form.control}
-              name="selectedRole"
+              name="role"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

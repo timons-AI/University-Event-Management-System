@@ -27,4 +27,10 @@ export const UpdateEventSchema = z.object({
     z.string().min(1, { message: "Description is required" })
   ),
   price: z.optional(z.number().min(0, { message: "Price must be a number" })),
+  date: z.optional(z.string().min(1)),
+  venueId: z.optional(z.string().min(1)),
+});
+
+export const UpdateUserSchema = z.object({
+  role: z.optional(z.string().min(1)),
 });

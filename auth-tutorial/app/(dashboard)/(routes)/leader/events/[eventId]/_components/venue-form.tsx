@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
+import { updateEvent } from "@/actions/event";
 
 interface VenueFormProps {
   initialData: Event;
@@ -54,7 +55,13 @@ export const VenueForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${eventId}`, values);
+      // await axios.patch(`/api/courses/${eventId}`, values);
+      updateEvent(values, eventId);
+      // toast.success(
+      //   <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+      //     <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+      //   </pre>
+      // );
       toast.success("Event updated");
       toggleEdit();
       router.refresh();
@@ -104,7 +111,7 @@ export const VenueForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox options={...options} {...field} />
+                    <Combobox options={options} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
