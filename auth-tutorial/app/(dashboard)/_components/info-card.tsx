@@ -2,7 +2,7 @@ import { IconBadge } from "@/components/icon-badge";
 import { LucideIcon } from "lucide-react";
 interface InfoCardProps {
   numberOfItems: number;
-  variant?: "default" | "success";
+  variant?: "success" | "yellow" | "purple" | "rose" | "emerald";
   label: string;
   icon: LucideIcon;
 }
@@ -17,8 +17,11 @@ export const InfoCard = ({
       <IconBadge variant={variant} icon={Icon} />
       <div>
         <p className=" font-medium">{label}</p>
-        <p className=" text-gray-500 text-sm">
-          {numberOfItems} {numberOfItems === 1 ? "Item" : "Items"}
+        <p
+          className={`text-gray-500 text-sm rounded-full  px-2 py-1 bg-${variant}-100 `}
+        >
+          {numberOfItems}
+          {/* {numberOfItems === 1 ? "Item" : "Items"} */}
         </p>
       </div>
     </div>

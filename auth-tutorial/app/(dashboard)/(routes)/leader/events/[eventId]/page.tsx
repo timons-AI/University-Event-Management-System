@@ -24,6 +24,7 @@ import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
 import { DateForm } from "./_components/date-form";
 import { BiLocationPlus } from "react-icons/bi";
+import { FormError } from "@/components/form-error";
 
 const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
   const user = await currentUser();
@@ -36,6 +37,13 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
     where: {
       id: params.eventId,
       userId: user.id,
+    },
+    include: {
+      bookings: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 
@@ -137,6 +145,30 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
             </div>
           </div>
         </div>
+        {completedFields === totalFields && (
+          <div className="space-y-6 mt-6">
+            <div className=" border my-4" />
+            <div className="flex items-center gap-x-2 mt-6 ">
+              <IconBadge icon={ListChecks} variant="yellow" />
+              <h2 className="text-xl">Bookings</h2>
+            </div>
+            {event.bookings.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                {event.bookings.map((booking) => (
+                  <div key={booking.id}>
+                    <p className="text-slate-700 bg-slate-100 border rounded-md p-2">
+                      {booking.user.email}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className=" w-fit">
+                <FormError message="There are no bookings for this event" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

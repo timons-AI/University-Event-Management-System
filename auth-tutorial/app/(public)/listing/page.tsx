@@ -4,6 +4,9 @@ import { bookEvent } from "@/actions/users";
 import { auth } from "@/auth";
 import { Booking } from "./_components/book-button";
 import { currentUser } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 
 const ListingPage = async () => {
   const session = await currentUser();
@@ -14,6 +17,11 @@ const ListingPage = async () => {
     include: {
       user: true,
       venue: true,
+      bookings: {
+        where: {
+          userId: session?.id,
+        },
+      },
     },
   });
 
@@ -29,18 +37,26 @@ const ListingPage = async () => {
           <p className="text-gray-500">Published by: {listing.user.name}</p>
           <p className="text-gray-500">Venue: {listing?.venue?.name}</p>
           <p className="text-gray-500">
-            Date: {new Date(listing.date).toLocaleDateString()}
+            Date:{" "}
+            {listing.date ? new Date(listing.date).toLocaleDateString() : ""}
           </p>
-          {listing.price > 0 ? (
+          {listing.price !== null && listing.price > 0 ? (
             <p className="text-gray-500">
-              Price of entry: UGX. {listing.price}
+              Price of entry: UGX, {listing.price.toLocaleString()}
             </p>
           ) : (
             <p className="text-gray-500">Event is free</p>
           )}
-          <div className="flex justify-end">
-            {listing.price > 0 ? (
-              <Booking listingId={listing.id} userId={session?.id} />
+          <div className="flex justify-end"></div>
+          <div>
+            {listing.bookings.length > 0 ? (
+              <div>
+                <FormSuccess message="You are registered for this event " />
+                <p className="text-gray-500 text-xs">
+                  Date Booked:{" "}
+                  {new Date(listing.bookings[0].createdAt).toLocaleDateString()}
+                </p>
+              </div>
             ) : (
               <Booking listingId={listing.id} userId={session?.id} />
             )}
