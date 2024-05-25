@@ -21,9 +21,9 @@ export const createEvent = async (
     return { error: "Unauthorized" };
   }
   // role check
-  if (dbUser.role !== "LEADER") {
-    return { error: "Unauthorized" };
-  }
+  // if (dbUser.role !== "LEADER") {
+  //   return { error: "Unauthorized" };
+  // }
 
   const event = await db.event.create({
     data: {

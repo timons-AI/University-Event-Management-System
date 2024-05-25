@@ -25,8 +25,13 @@ const studentRoutes = [
   },
   {
     icon: Compass,
-    label: "Browse",
-    href: "/browse",
+    label: "Events",
+    href: "/student/events",
+  },
+  {
+    icon: PlusCircle,
+    label: "Create Events",
+    href: "/student/create-events",
   },
 ];
 

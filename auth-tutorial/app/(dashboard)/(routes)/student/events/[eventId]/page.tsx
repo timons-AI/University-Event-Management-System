@@ -25,7 +25,8 @@ import { Actions } from "./_components/actions";
 import { DateForm } from "./_components/date-form";
 import { BiLocationPlus } from "react-icons/bi";
 import { FormError } from "@/components/form-error";
-import { Approval } from "../../../student/events/[eventId]/_components/approval";
+import { Button } from "@/components/ui/button";
+import { Approval } from "./_components/approval";
 
 const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
   const user = await currentUser();

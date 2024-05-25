@@ -164,3 +164,73 @@ export const bookingAction = async (userId: string, eventId: string) => {
 
   return { data: booking };
 };
+
+export const verifyBooking = async (bookingId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  const booking = await db.booking.findUnique({
+    where: {
+      id: bookingId,
+    },
+  });
+
+  if (!booking) {
+    return { error: "Booking not found" };
+  }
+
+  const updatedBooking = await db.booking.update({
+    where: {
+      id: bookingId,
+    },
+    data: {
+      verified: true,
+    },
+  });
+
+  return { data: updatedBooking };
+};
+
+export const revokeBooking = async (bookingId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  const booking = await db.booking.findUnique({
+    where: {
+      id: bookingId,
+    },
+  });
+
+  if (!booking) {
+    return { error: "Booking not found" };
+  }
+
+  const updatedBooking = await db.booking.update({
+    where: {
+      id: bookingId,
+    },
+    data: {
+      verified: false,
+    },
+  });
+
+  return { data: updatedBooking };
+};
