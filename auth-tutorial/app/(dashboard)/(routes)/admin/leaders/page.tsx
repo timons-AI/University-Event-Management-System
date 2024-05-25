@@ -6,6 +6,10 @@ import { columns } from "./_components/columns";
 import { UserRole } from "@prisma/client";
 
 const EventsPage = async () => {
+  const enable = false;
+  if (!enable) {
+    redirect("/dashboard");
+  }
   const session = await auth();
   const userId = session?.user.id;
 

@@ -3,9 +3,8 @@ import { redirect } from "next/navigation";
 
 const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
   const role = await currentRole();
-
-  if (!role || role !== "ADMIN") {
-    return redirect("/dashboard");
+  if (role !== "ADMIN") {
+    redirect("/");
   }
 
   return <>{children}</>;

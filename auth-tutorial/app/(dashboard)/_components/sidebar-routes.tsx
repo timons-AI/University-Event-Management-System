@@ -59,11 +59,11 @@ const adminRoutes = [
     label: "Events",
     href: "/admin/events",
   },
-  {
-    icon: BarChart,
-    label: "Leaders",
-    href: "/admin/leaders",
-  },
+  // {
+  //   icon: BarChart,
+  //   label: "Leaders",
+  //   href: "/admin/leaders",
+  // },
 ];
 
 export const SidebarRoutes = () => {
