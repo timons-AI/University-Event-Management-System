@@ -21,7 +21,7 @@ export const Navbar = () => {
           </Link>
         </div>
       </div>
-      <div className=" w-2/3">
+      <div className=" w-full md:w-2/3 flex items-center justify-between">
         <MobileSidebar />
         <NavbarRoutes />
       </div>

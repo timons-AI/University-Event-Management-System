@@ -7,14 +7,16 @@ import Link from "next/link";
 import { UserButton } from "./auth/user-button";
 export const NavbarRoutes = () => {
   return (
-    <div className="  flex items-center justify-between mx-6 ">
+    <div className="  flex items-center justify-between mx-6  w-full">
       <Link href="/">
         <Button size="sm" variant="outline">
           <GlobeIcon className=" h-4 w-4 mr-2" />
           Public View
         </Button>
       </Link>
-      <UserButton />
+      <div className=" self-end ">
+        <UserButton />
+      </div>
     </div>
   );
 };

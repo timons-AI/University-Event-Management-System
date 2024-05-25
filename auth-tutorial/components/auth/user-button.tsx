@@ -19,12 +19,17 @@ export const UserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className=" border">
-          <AvatarImage src={user?.image || ""} />
-          <AvatarFallback className=" bg-primary">
-            <FaUser className=" text-white" />
-          </AvatarFallback>
-        </Avatar>
+        <div className=" flex items-center gap-2">
+          <div className=" bg-purple-200 text-xs rounded-md p-1">
+            {user?.role}
+          </div>
+          <Avatar className=" border">
+            <AvatarImage src={user?.image || ""} />
+            <AvatarFallback className=" bg-primary">
+              <FaUser className=" text-white" />
+            </AvatarFallback>
+          </Avatar>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className=" w-40" align="end">
         {user ? (
