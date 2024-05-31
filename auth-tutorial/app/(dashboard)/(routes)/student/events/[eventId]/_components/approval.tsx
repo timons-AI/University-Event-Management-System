@@ -60,6 +60,13 @@ export const Approval = ({ eventId, booking }: ApprovalProps) => {
               Booked on: {booking.createdAt.toLocaleString()}
             </span>
           </p>
+          {booking.feedback ? (
+            <span className="text-sm bg-red-200 p-1 rounded-sm text-slate-700">
+              {booking.feedback}
+            </span>
+          ) : (
+            <span className="text-sm text-slate-700">No feedback given</span>
+          )}
         </div>
         {booking.verified ? (
           <Button

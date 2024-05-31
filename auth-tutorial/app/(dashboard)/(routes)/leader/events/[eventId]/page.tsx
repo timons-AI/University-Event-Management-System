@@ -156,7 +156,9 @@ const CourseIdPage = async ({ params }: { params: { eventId: string } }) => {
             {event.bookings.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 {event.bookings.map((booking) => (
-                  <Approval eventId={event.id} booking={booking} />
+                  <div className="flex-col items-center gap-2">
+                    <Approval eventId={event.id} booking={booking} />
+                  </div>
                 ))}
               </div>
             ) : (

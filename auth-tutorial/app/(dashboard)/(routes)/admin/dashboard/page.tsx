@@ -10,6 +10,10 @@ import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { FormSuccess } from "@/components/form-success";
+import Print from "./_components/print-pdf";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { FcDocument } from "react-icons/fc";
 
 const Admin = async () => {
   const user = await currentUser();
@@ -76,6 +80,13 @@ const Admin = async () => {
           }
         />
       </div>
+      {/* <Print /> */}
+      <Link href="/admin/report">
+        <Button variant="outline" className="flex items-center m-4">
+          <FcDocument className="mr-2" />
+          View Report
+        </Button>
+      </Link>
     </div>
   );
 };

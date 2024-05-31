@@ -58,9 +58,9 @@ export const publishEvent = async (eventId: string) => {
     return { error: "Event not found" };
   }
 
-  if (event.userId !== dbUser.id) {
-    return { error: "Unauthorized" };
-  }
+  // if (event.userId !== dbUser.id) {
+  //   return { error: "Unauthorized" };
+  // }
 
   const updatedEvent = await db.event.update({
     where: {
@@ -97,9 +97,9 @@ export const unpublishEvent = async (eventId: string) => {
     return { error: "Event not found" };
   }
 
-  if (event.userId !== dbUser.id) {
-    return { error: "Unauthorized" };
-  }
+  // if (event.userId !== dbUser.id) {
+  //   return { error: "Unauthorized" };
+  // }
 
   const updatedEvent = await db.event.update({
     where: {
@@ -136,9 +136,9 @@ export const archiveEvent = async (eventId: string) => {
     return { error: "Event not found" };
   }
 
-  if (event.userId !== dbUser.id) {
-    return { error: "Unauthorized" };
-  }
+  // if (event.userId !== dbUser.id) {
+  //   return { error: "Unauthorized" };
+  // }
 
   const updatedEvent = await db.event.update({
     where: {
@@ -193,4 +193,56 @@ export const updateEvent = async (
   });
 
   return { data: updatedEvent };
+};
+
+export const updateBookingFeedback = async (
+  feedback: string,
+  bookingId: string
+) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  const booking = await db.booking.findUnique({
+    where: {
+      id: bookingId,
+    },
+  });
+
+  if (!booking) {
+    return { error: "Booking not found" };
+  }
+
+  const event = await db.event.findUnique({
+    where: {
+      id: booking.eventId,
+    },
+  });
+
+  if (!event) {
+    return { error: "Event not found" };
+  }
+
+  // if (event.userId !== dbUser.id) {
+  //   return { error: "Unauthorized" };
+  // }
+
+  const updatedBooking = await db.booking.update({
+    where: {
+      id: bookingId,
+    },
+    data: {
+      feedback,
+    },
+  });
+
+  return { data: updatedBooking };
 };

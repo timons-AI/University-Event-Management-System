@@ -85,6 +85,7 @@ model Booking {
   updatedAt DateTime @updatedAt
   event     Event    @relation(fields: [eventId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+  feedback  String?  @db.Text
 
   @@map("bookings")
 }
