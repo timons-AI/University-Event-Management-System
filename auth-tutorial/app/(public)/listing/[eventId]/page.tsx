@@ -57,13 +57,22 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
           <Booking listingId={listing.id} userId={session?.id} />
         )}
       </div>
-      {listing.bookings[0].verified && (
+      {listing.bookings[0].verified ? (
         <div>
           <p
             className="text-gray-500 bg-green-100 p-2 rounded-md m-2 text-xs
             "
           >
             Your attendance has been confirmed
+          </p>
+        </div>
+      ) : (
+        <div>
+          <p
+            className="text-gray-500 bg-red-100 p-2 rounded-md m-2 text-xs
+            "
+          >
+            Call The help line : 077 562 1957 to confirm your attendance
           </p>
         </div>
       )}
