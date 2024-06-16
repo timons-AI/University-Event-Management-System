@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Booking } from "../_components/book-button";
 import { currentUser } from "@/lib/auth";
 import { FeedbackForm } from "./_components/description-form";
-
+import QRCodeCompoent from "./_components/QR-code";
 const EventDetail = async ({ params }: { params: { eventId: string } }) => {
   const session = await currentUser();
 
@@ -27,6 +27,23 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
   if (!listing) {
     return redirect("/");
   }
+
+  const QRCodeInfo = JSON.stringify({
+    // user id,
+    userId: session?.id,
+    // user name,
+    userName: session?.name,
+    // event name,
+    eventName: listing.name,
+    // event date,
+    eventDate: listing.date,
+    // date booked,
+    dateBooked: listing.bookings[0].createdAt,
+    // event venue,
+    venue: listing.venue?.name,
+    // event id
+    eventId: listing.id,
+  });
   return (
     <div className=" mt-6 w-full h-full p-8">
       <h1 className="text-2xl font-semibold">{listing.name}</h1>
@@ -76,6 +93,9 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
           </p>
         </div>
       )}
+      <div className="mt-4">
+        <QRCodeCompoent value={QRCodeInfo} />
+      </div>
 
       {listing.bookings.length > 0 &&
         listing.bookings[0].verified &&
