@@ -235,9 +235,9 @@ const Admin = async () => {
           </SheetTrigger>
           <SheetContent className=" ">
             <SheetHeader>
-              <SheetTitle>Events Booked</SheetTitle>
+              <SheetTitle>Events Pending Review</SheetTitle>
               <SheetDescription>
-                These are the events you have booked
+                These are the events that are pending review
               </SheetDescription>
             </SheetHeader>
             <div>
@@ -298,9 +298,9 @@ const Admin = async () => {
           </SheetTrigger>
           <SheetContent className=" ">
             <SheetHeader>
-              <SheetTitle>Events Booked</SheetTitle>
+              <SheetTitle>Students</SheetTitle>
               <SheetDescription>
-                These are the events you have booked
+                These are the students in the system
               </SheetDescription>
             </SheetHeader>
             <div>
