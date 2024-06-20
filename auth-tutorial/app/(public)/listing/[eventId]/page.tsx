@@ -82,6 +82,9 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
           >
             Your attendance has been confirmed
           </p>
+          <div className="mt-4">
+            <QRCodeCompoent value={QRCodeInfo} />
+          </div>
         </div>
       ) : (
         <div>
@@ -89,13 +92,13 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
             className="text-gray-500 bg-red-100 p-2 rounded-md m-2 text-xs
             "
           >
-            Call The help line : 077 562 1957 to confirm your attendance
+            - Call The help line : 077 562 1957 to confirm your attendance{" "}
+            <br /> - After confirming your attendance, you will be provided a QR
+            code to scan at the event <br />- And you will be able to give
+            feedback after the event
           </p>
         </div>
       )}
-      <div className="mt-4">
-        <QRCodeCompoent value={QRCodeInfo} />
-      </div>
 
       {listing.bookings.length > 0 &&
         listing.bookings[0].verified &&
