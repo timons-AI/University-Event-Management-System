@@ -1,6 +1,12 @@
 import { ComboboxForm } from "../(dashboard)/(routes)/admin/leaders/[leaderId]/_components/users-form";
+import { redirect } from "next/navigation";
 
 export default function LandingPage() {
+  const islandingpage = false;
+  if (!islandingpage) {
+    return redirect("/listing");
+  }
+
   return (
     <div className="bg-white h-full ">
       <main>
