@@ -40,7 +40,7 @@ export default function RegisterPage() {
         <div className="relative hidden w-0 flex-1 lg:block">
           <img
             className="absolute inset-0 h-full w-full object-cover"
-            src="/gardens-01.jpg"
+            src="/kids.jpg"
             alt=""
           />
         </div>

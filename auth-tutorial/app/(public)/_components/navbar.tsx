@@ -17,7 +17,7 @@ export const Navbar = () => {
         height={40}
         alt="ISEM LOGO"
       />
-      <div className="flex justify items-center gap-x-4">
+      {/* <div className="flex justify items-center gap-x-4">
         <Button asChild variant={pathname === "/" ? "default" : "outline"}>
           <Link href="/">Home</Link>
         </Button>
@@ -27,7 +27,7 @@ export const Navbar = () => {
         >
           <Link href="/listing">Listings</Link>
         </Button>
-      </div>
+      </div> */}
       <UserButton />
     </nav>
   );
