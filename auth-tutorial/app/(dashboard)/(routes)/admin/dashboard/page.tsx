@@ -43,6 +43,7 @@ const Admin = async () => {
     <div className=" p-6 space-y-4">
       <FormSuccess message={"Welcome back, " + user.name + " !"} />
       <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Leaders  */}
         <Sheet>
           <SheetTrigger>
             <InfoCard
@@ -96,6 +97,7 @@ const Admin = async () => {
             </div>
           </SheetContent>
         </Sheet>
+        {/* Total Events  */}
         <Sheet>
           <SheetTrigger>
             <InfoCard
@@ -105,7 +107,7 @@ const Admin = async () => {
               numberOfItems={totalEvents}
             />
           </SheetTrigger>
-          <SheetContent className=" ">
+          <SheetContent className="  w-full md:w-1/2 ">
             <SheetHeader>
               <SheetTitle>Events </SheetTitle>
               <SheetDescription>
@@ -130,21 +132,26 @@ const Admin = async () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {events.map((event) => (
                     <tr key={event.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {event.name}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {event.date?.toString()}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {event.status || "PENDING"}
-                        </div>
-                      </td>
+                      <Link
+                        href={`/admin/events/${event.id}`}
+                        className=" bg-slate-200 rounded-md p-2"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.name}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.date?.toString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.status || "PENDING"}
+                          </div>
+                        </td>
+                      </Link>
                     </tr>
                   ))}
                 </tbody>
@@ -152,6 +159,7 @@ const Admin = async () => {
             </div>
           </SheetContent>
         </Sheet>
+        {/* Events  */}
         <Sheet>
           <SheetTrigger>
             <InfoCard
@@ -197,21 +205,26 @@ const Admin = async () => {
                     )
                     .map((event) => (
                       <tr key={event.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.name}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.date?.toString()}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.status || "PENDING"}
-                          </div>
-                        </td>
+                        <Link
+                          href={`/admin/events/${event.id}`}
+                          className=" bg-slate-200 rounded-md p-2"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.name}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.date?.toString()}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.status || "PENDING"}
+                            </div>
+                          </td>
+                        </Link>
                       </tr>
                     ))}
                 </tbody>
@@ -219,7 +232,7 @@ const Admin = async () => {
             </div>
           </SheetContent>
         </Sheet>
-
+        {/* Events  */}
         <Sheet>
           <SheetTrigger>
             <InfoCard
@@ -262,21 +275,26 @@ const Admin = async () => {
                     )
                     .map((event) => (
                       <tr key={event.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.name}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.date?.toString()}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.status || "PENDING"}
-                          </div>
-                        </td>
+                        <Link
+                          href={`/admin/events/${event.id}`}
+                          className=" bg-slate-200 rounded-md p-2"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.name}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.date?.toString()}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.status || "PENDING"}
+                            </div>
+                          </td>
+                        </Link>
                       </tr>
                     ))}
                 </tbody>
@@ -284,6 +302,7 @@ const Admin = async () => {
             </div>
           </SheetContent>
         </Sheet>
+        {/* Events  */}
         <Sheet>
           <SheetTrigger>
             <InfoCard
@@ -337,7 +356,7 @@ const Admin = async () => {
             </div>
           </SheetContent>
         </Sheet>
-
+        {/* Events  */}
         <Sheet>
           <SheetTrigger>
             <InfoCard
@@ -376,21 +395,26 @@ const Admin = async () => {
                     .filter((event) => event.status === "ARCHIVED")
                     .map((event) => (
                       <tr key={event.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.name}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.date?.toString()}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.status || "PENDING"}
-                          </div>
-                        </td>
+                        <Link
+                          href={`/admin/events/${event.id}`}
+                          className=" bg-slate-200 rounded-md p-2"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.name}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.date?.toString()}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.status || "PENDING"}
+                            </div>
+                          </td>
+                        </Link>
                       </tr>
                     ))}
                 </tbody>
@@ -444,21 +468,26 @@ const Admin = async () => {
                     )
                     .map((event) => (
                       <tr key={event.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.name}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.date?.toString()}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {event.status || "PENDING"}
-                          </div>
-                        </td>
+                        <Link
+                          href={`/admin/events/${event.id}`}
+                          className=" bg-slate-200 rounded-md p-2"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.name}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.date?.toString()}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
+                              {event.status || "PENDING"}
+                            </div>
+                          </td>
+                        </Link>
                       </tr>
                     ))}
                 </tbody>

@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/auth/login-form";
 import Image from "next/image";
+import SliderImage from "../carosel";
 
 export default function LoginPage() {
   return (
@@ -36,12 +37,8 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
-        <div className="relative hidden w-0 flex-1 lg:block">
-          <img
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/kids.jpg"
-            alt=""
-          />
+        <div className=" hidden w-0 flex-1 lg:block">
+          <SliderImage />
         </div>
       </div>
     </>
