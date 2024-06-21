@@ -59,11 +59,11 @@ export const Actions = ({ disabled, eventId, isPublished }: ActionsProps) => {
         variant="outline"
         size="sm"
       >
-        {isPublished ? "Unpublish" : "Publish"}
+        {isPublished ? "Unpublish" : "Submit"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading}>
-          <Trash className=" h-4 w-4" />
+          <Trash className=" h-4 w-4" /> <p>Archive</p>
         </Button>
       </ConfirmModal>
     </div>

@@ -81,11 +81,11 @@ export const RegisterForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Webmail</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="john.doe@example.com"
+                      placeholder="john.doe@students.mak.ac.ug"
                       type="email"
                       disabled={isPending}
                     />

@@ -13,10 +13,15 @@ interface HeaderProps {
 export const Header = ({ label }: HeaderProps) => {
   return (
     <div className=" w-full flex flex-col gap-y-4 items-center justify-center">
-      <h1 className={cn(" text-3xl font-semibold", font.className)}>
+      <h1
+        className={cn(
+          " text-2xl uppercase text-primary font-semibold",
+          font.className
+        )}
+      >
         Institutional Student Event Manager{" "}
-        <p className=" text-muted-foreground text-sm">{label}</p>
       </h1>
+      <p className=" text-red-500 text-muted-foreground text-sm">{label}</p>
     </div>
   );
 };
