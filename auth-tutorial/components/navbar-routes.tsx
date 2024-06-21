@@ -8,7 +8,7 @@ import { UserButton } from "./auth/user-button";
 export const NavbarRoutes = () => {
   return (
     <div className="  flex items-center justify-between mx-6  w-full">
-      <Link href="/">
+      <Link href="/" className=" opacity-0">
         <Button size="sm" variant="outline">
           <GlobeIcon className=" h-4 w-4 mr-2" />
           Public View

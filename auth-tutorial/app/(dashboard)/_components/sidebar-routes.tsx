@@ -5,6 +5,7 @@ import {
   BarChart,
   Compass,
   Film,
+  Globe2,
   Layout,
   List,
   PlaySquare,
@@ -33,6 +34,11 @@ const studentRoutes = [
     label: "Create Events",
     href: "/student/create-events",
   },
+  {
+    icon: Globe2,
+    label: "Published Events",
+    href: "/",
+  },
 ];
 
 const leaderRoutes = [
@@ -51,6 +57,11 @@ const leaderRoutes = [
     label: "Create Events",
     href: "/leader/create-events",
   },
+  {
+    icon: Globe2,
+    label: "Published Events",
+    href: "/",
+  },
 ];
 
 const adminRoutes = [
@@ -64,11 +75,11 @@ const adminRoutes = [
     label: "Events",
     href: "/admin/events",
   },
-  // {
-  //   icon: BarChart,
-  //   label: "Leaders",
-  //   href: "/admin/leaders",
-  // },
+  {
+    icon: Globe2,
+    label: "Published Events",
+    href: "/",
+  },
 ];
 
 export const SidebarRoutes = () => {

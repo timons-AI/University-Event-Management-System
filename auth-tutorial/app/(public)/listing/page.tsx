@@ -47,21 +47,29 @@ const ListingPage = async () => {
               <p className="text-gray-500">Event is free</p>
             )}
             <div className="flex justify-end"></div>
-            <div>
-              {listing.bookings.length > 0 ? (
-                <div>
-                  <FormSuccess message="You are registered for this event " />
-                  <p className="text-gray-500 text-xs">
-                    Date Booked:{" "}
-                    {new Date(
-                      listing.bookings[0].createdAt
-                    ).toLocaleDateString()}
-                  </p>
-                </div>
-              ) : (
-                <Booking listingId={listing.id} userId={session?.id} />
-              )}
-            </div>
+
+            {session?.role === "ADMIN" ? (
+              // http://localhost:3000/admin/events/clxn8e0oi0003dzei5zwahusx
+              <Link href={`/admin/events/${listing.id}`}>
+                <Button>View</Button>
+              </Link>
+            ) : (
+              <div>
+                {listing.bookings.length > 0 ? (
+                  <div>
+                    <FormSuccess message="You are registered for this event " />
+                    <p className="text-gray-500 text-xs">
+                      Date Booked:{" "}
+                      {new Date(
+                        listing.bookings[0].createdAt
+                      ).toLocaleDateString()}
+                    </p>
+                  </div>
+                ) : (
+                  <Booking listingId={listing.id} userId={session?.id} />
+                )}
+              </div>
+            )}
           </div>
         </Link>
       ))}

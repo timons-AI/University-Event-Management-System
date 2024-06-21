@@ -57,9 +57,9 @@ const Admin = async () => {
           </SheetTrigger>
           <SheetContent className=" ">
             <SheetHeader>
-              <SheetTitle>Events Booked</SheetTitle>
+              <SheetTitle>Leaders</SheetTitle>
               <SheetDescription>
-                These are the events you have booked
+                These are the leaders in the system
               </SheetDescription>
             </SheetHeader>
             <div>
@@ -107,9 +107,9 @@ const Admin = async () => {
           </SheetTrigger>
           <SheetContent className=" ">
             <SheetHeader>
-              <SheetTitle>Events Booked</SheetTitle>
+              <SheetTitle>Events </SheetTitle>
               <SheetDescription>
-                These are the events you have booked
+                These are the events in the system
               </SheetDescription>
             </SheetHeader>
             <div>
@@ -328,6 +328,135 @@ const Admin = async () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
                             {user.email}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger>
+            <InfoCard
+              icon={User2Icon}
+              variant="purple"
+              label="Declined Events"
+              numberOfItems={
+                events.filter((event) => event.status === "ARCHIVED").length
+              }
+            />
+          </SheetTrigger>
+          <SheetContent className=" ">
+            <SheetHeader>
+              <SheetTitle>Declined Events</SheetTitle>
+              <SheetDescription>
+                These are the events that are declined
+              </SheetDescription>
+            </SheetHeader>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {events
+                    .filter((event) => event.status === "ARCHIVED")
+                    .map((event) => (
+                      <tr key={event.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.name}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.date?.toString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.status || "PENDING"}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger>
+            <InfoCard
+              icon={Clock}
+              variant="rose"
+              label="Approved Events"
+              numberOfItems={
+                events.filter(
+                  (event) => !event.status || event.status === "PUBLISHED"
+                ).length
+              }
+            />
+          </SheetTrigger>
+          <SheetContent className=" ">
+            <SheetHeader>
+              <SheetTitle>Approved Events</SheetTitle>
+              <SheetDescription>
+                Events that are approved and ready to be booked
+              </SheetDescription>
+            </SheetHeader>
+            <div>
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {events
+                    .filter(
+                      (event) =>
+                        event.status === "PUBLISHED" &&
+                        event.date &&
+                        event.date > new Date()
+                    )
+                    .map((event) => (
+                      <tr key={event.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.name}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.date?.toString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {event.status || "PENDING"}
                           </div>
                         </td>
                       </tr>
