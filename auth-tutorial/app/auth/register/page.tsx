@@ -1,6 +1,7 @@
 import { LoginForm } from "@/components/auth/login-form";
 import { RegisterForm } from "@/components/auth/register-form";
 import Image from "next/image";
+import SliderImage from "../carosel";
 
 export default function RegisterPage() {
   return (
@@ -37,12 +38,8 @@ export default function RegisterPage() {
             </div>
           </div>
         </div>
-        <div className="relative hidden w-0 flex-1 lg:block">
-          <img
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/kids.jpg"
-            alt=""
-          />
+        <div className="hidden w-0 flex-1 lg:block">
+          <SliderImage />
         </div>
       </div>
     </>
