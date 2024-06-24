@@ -48,7 +48,7 @@ export const UserButton = () => {
           </>
         ) : (
           <DropdownMenuItem>
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

@@ -4,6 +4,7 @@ import { getUserById } from "@/data/user";
 import { currentRole, currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UserRole } from "@prisma/client";
+import { addMonths, subMonths } from "date-fns";
 
 export const admin = async () => {
   const role = await currentRole();
@@ -103,4 +104,27 @@ export const archiveEvent = async (eventId: string) => {
   });
 
   return { data: updatedEvent };
+};
+
+export const getEventsData = async () => {
+  const now = new Date();
+  const threeMonthsAgo = subMonths(now, 3);
+  const sixMonthsFuture = addMonths(now, 6);
+
+  const events = await db.event.findMany({
+    where: {
+      date: {
+        gte: threeMonthsAgo,
+        lte: sixMonthsFuture,
+      },
+    },
+    select: {
+      date: true,
+      status: true,
+    },
+  });
+
+  console.log("events:  : ", events);
+
+  return events;
 };

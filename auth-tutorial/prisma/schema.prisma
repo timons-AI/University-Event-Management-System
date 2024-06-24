@@ -24,6 +24,7 @@ model User {
   accounts      Account[]
   events        Event[]
   bookings      Booking[]
+  CreatedAt     DateTime  @default(now())
 
   @@map("users")
 }

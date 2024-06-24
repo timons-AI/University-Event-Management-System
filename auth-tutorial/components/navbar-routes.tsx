@@ -1,4 +1,3 @@
-"use client";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { Globe2Icon, GlobeIcon, LogOut } from "lucide-react";

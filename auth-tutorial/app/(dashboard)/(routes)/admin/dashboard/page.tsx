@@ -23,6 +23,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import EventsTimeLineChart from "@/app/shared/chart-widgets/events-over-time-line-chart";
+import EventsAgainstBooking from "@/app/shared/chart-widgets/booking-against-events-over-time";
+import UsersTimeLineChart from "@/app/shared/chart-widgets/users-over-time-line-chart";
+import {
+  BookingsOverTime,
+  EventsOverTime,
+  UsersOverTime,
+} from "@/actions/chart_data";
+import Charts from "@/components/chart-by-james";
 
 const Admin = async () => {
   const user = await currentUser();
@@ -36,12 +45,16 @@ const Admin = async () => {
   });
 
   const users = await db.user.findMany();
-
   const totalEvents = await db.event.count();
+  // chart data
+  const eotdata = await EventsOverTime();
+  const eobdata = await BookingsOverTime();
+  const uotdata = await UsersOverTime();
 
   return (
     <div className=" p-6 space-y-4">
       <FormSuccess message={"Welcome back, " + user.name + " !"} />
+      <Charts />
       <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Leaders  */}
         <Sheet>
@@ -503,6 +516,9 @@ const Admin = async () => {
           View Report
         </Button>
       </Link>
+      <EventsTimeLineChart data={eotdata.data} />
+      <EventsAgainstBooking data={eobdata.data} />
+      <UsersTimeLineChart data={uotdata.data} />
     </div>
   );
 };

@@ -1,9 +1,8 @@
 "use client";
-
 import { UserButton } from "@/components/auth/user-button";
-import { Button } from "@/components/ui/button";
+
 import Image from "next/image";
-import Link from "next/link";
+
 import { usePathname } from "next/navigation";
 
 export const Navbar = () => {

@@ -1,4 +1,5 @@
 import { InfoCard } from "@/app/(dashboard)/_components/info-card";
+import EventsTimeLineChart from "@/app/shared/chart-widgets/events-over-time-line-chart";
 import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@/lib/auth";
@@ -9,6 +10,7 @@ import {
   CirclePower,
   CircleUser,
   Clock,
+  LucideIcon,
   StarIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -41,6 +43,34 @@ const LeaderPage = async () => {
     include: {
       bookings: true,
     },
+  });
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const eotdata = months.map((month) => {
+    const eventsInMonth = events.filter(
+      (event) =>
+        event.date &&
+        event.date.getMonth() === months.indexOf(month) &&
+        event.date.getFullYear() === new Date().getFullYear()
+    );
+    return {
+      month,
+      events: eventsInMonth.length,
+    };
   });
 
   return (
@@ -93,7 +123,7 @@ const LeaderPage = async () => {
           }
         />
         <InfoCard
-          icon={BiHomeCircle}
+          icon={BiHomeCircle as LucideIcon}
           variant="rose"
           label="Total Events"
           numberOfItems={events.length}
@@ -119,6 +149,7 @@ const LeaderPage = async () => {
           ))}
         </>
       )}
+      <EventsTimeLineChart data={eotdata} />
     </div>
   );
 };

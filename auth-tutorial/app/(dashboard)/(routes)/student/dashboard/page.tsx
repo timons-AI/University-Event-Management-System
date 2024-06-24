@@ -26,6 +26,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BiRightArrow } from "react-icons/bi";
 import { FcDocument } from "react-icons/fc";
+import SimpleLineChart from "@/app/shared/chart-widgets/simple-line-chart";
+import ActivityReport from "@/app/shared/chart-widgets/activity-report";
+import SimpleBarChart from "@/app/shared/chart-widgets/simple-bar-chart";
+import StorageReport from "@/app/shared/chart-widgets/bargraph";
+import EventsTimeLineChart from "@/app/shared/chart-widgets/events-over-time-line-chart";
 
 const LeaderPage = async () => {
   const user = await currentUser();
@@ -43,6 +48,36 @@ const LeaderPage = async () => {
     include: {
       bookings: true,
     },
+  });
+
+  const allEvents = await db.event.findMany();
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const eotdata = months.map((month) => {
+    const eventsInMonth = allEvents.filter(
+      (event) =>
+        event.date &&
+        event.date.getMonth() === months.indexOf(month) &&
+        event.date.getFullYear() === new Date().getFullYear()
+    );
+    return {
+      month,
+      events: eventsInMonth.length,
+    };
   });
 
   const publishedEvents = events.filter(
@@ -88,6 +123,12 @@ const LeaderPage = async () => {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* <SimpleLineChart /> */}
+      <EventsTimeLineChart data={eotdata} />
+      {/* <ActivityReport />
+      <SimpleBarChart />
+      <StorageReport className="@container @4xl:col-span-8 @[96.937rem]:col-span-9" /> */}
 
       <Link href="/student/report">
         <Button variant="outline" className="flex items-center m-4">
