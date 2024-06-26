@@ -70,23 +70,15 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
           <Button>View</Button>
         </Link>
       ) : (
-        <div>
-          {listing.bookings.length > 0 ? (
-            <div>
-              <FormSuccess message="You are registered for this event " />
-              <p className="text-gray-500 text-xs">
-                Date Booked:{" "}
-                {new Date(listing.bookings[0].createdAt).toLocaleDateString()}
-              </p>
-            </div>
-          ) : (
-            <div className="">
+        <div className=" border p-2 rounded-md">
+          {listing.bookings.length > 0 && (
+            <>
               <div>
                 {listing.bookings.length > 0 ? (
                   <div>
                     <FormSuccess message="You are registered for this listing " />
                     <p className="text-gray-500 text-xs">
-                      Date Booked:{" "}
+                      Date Booked:
                       {new Date(
                         listing.bookings[0].createdAt
                       ).toLocaleDateString()}
@@ -96,12 +88,10 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
                   <Booking listingId={listing.id} userId={session?.id} />
                 )}
               </div>
+
               {listing.bookings[0].verified ? (
                 <div>
-                  <p
-                    className="text-gray-500 bg-green-100 p-2 rounded-md m-2 text-xs
-            "
-                  >
+                  <p className="text-gray-500 bg-green-100 p-2 rounded-md m-2 text-xs">
                     Your attendance has been confirmed
                   </p>
                   <div className="mt-4">
@@ -110,10 +100,7 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
                 </div>
               ) : (
                 <div>
-                  <p
-                    className="text-gray-500 bg-red-100 p-2 rounded-md m-2 text-xs
-            "
-                  >
+                  <p className="text-gray-500 bg-red-100 p-2 rounded-md m-2 text-xs">
                     - Call The help line : 077 562 1957 to confirm your
                     attendance <br /> - After confirming your attendance, you
                     will be provided a QR code to scan at the event <br />- And
@@ -134,7 +121,7 @@ const EventDetail = async ({ params }: { params: { eventId: string } }) => {
                     />
                   </div>
                 )}
-            </div>
+            </>
           )}
         </div>
       )}

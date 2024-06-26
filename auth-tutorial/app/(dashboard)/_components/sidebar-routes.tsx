@@ -37,7 +37,7 @@ const studentRoutes = [
   {
     icon: Globe2,
     label: "Published Events",
-    href: "/",
+    href: "/listing",
   },
 ];
 
@@ -60,7 +60,7 @@ const leaderRoutes = [
   {
     icon: Globe2,
     label: "Published Events",
-    href: "/",
+    href: "/listing",
   },
 ];
 
@@ -78,7 +78,7 @@ const adminRoutes = [
   {
     icon: Globe2,
     label: "Published Events",
-    href: "/",
+    href: "/listing",
   },
 ];
 

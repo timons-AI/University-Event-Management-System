@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 export default function LandingPage() {
   const islandingpage = false;
   if (!islandingpage) {
-    return redirect("/listing");
+    return redirect("/auth/login");
   }
 
   return (
