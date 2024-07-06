@@ -24,9 +24,11 @@ export const LoginSchema = z.object({
     .email({ message: "Invalid email address" })
     .refine(
       (email) =>
-        email.endsWith("@mak.ac.ug") || email.endsWith("@cit.mak.ac.ug"),
+        email.endsWith("@students.mak.ac.ug") ||
+        email.endsWith("@cit.mak.ac.ug"),
       {
-        message: "Email must be from the domain mak.ac.ug or cit.mak.ac.ug",
+        message:
+          "Email must be from the domain @students.mak.ac.ug or cit.mak.ac.ug",
       }
     ),
   password: z.string().min(1, { message: "Password is required" }),
@@ -41,8 +43,8 @@ export const RegisterSchema = z.object({
   email: z
     .string()
     .email({ message: "Invalid email address" })
-    .refine((email) => email.endsWith("@mak.ac.ug"), {
-      message: "Email must be from the domain mak.ac.ug",
+    .refine((email) => email.endsWith("@students.mak.ac.ug"), {
+      message: "Email must be from the domain @students.mak.ac.ug",
     }),
   password: z
     .string()
