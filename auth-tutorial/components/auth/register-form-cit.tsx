@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { RegisterSchema } from "@/schemas";
+import { CitRegisterSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -16,7 +16,7 @@ import {
   FormField,
 } from "@/components/ui/form";
 
-import { register } from "@/actions/register";
+import { citRegister } from "@/actions/register";
 
 import { CardWrapper } from "./card-wrapper";
 import { Button } from "@/components/ui/button";
@@ -28,8 +28,8 @@ export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof CitRegisterSchema>>({
+    resolver: zodResolver(CitRegisterSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -37,11 +37,11 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = (values: z.infer<typeof CitRegisterSchema>) => {
     setError(undefined);
     setSuccess(undefined);
     startTransition(() => {
-      register(values)
+      citRegister(values)
         .then((data) => {
           setError(data.error);
           setSuccess(data.success);
@@ -94,7 +94,7 @@ export const RegisterForm = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="john.doe@students.mak.ac.ug"
+                      placeholder="john.doe@cit.mak.ac.ug"
                       type="email"
                       disabled={isPending}
                     />

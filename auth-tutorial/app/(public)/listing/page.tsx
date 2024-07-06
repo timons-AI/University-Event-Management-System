@@ -1,13 +1,24 @@
+import Link from "next/link";
+import {
+  CalendarIcon,
+  CalendarRangeIcon,
+  MapPinIcon,
+  TicketIcon,
+  UserIcon,
+} from "lucide-react";
+
 import { db } from "@/lib/db";
-// import { toast } from "react-hot-toast";
-import { bookEvent } from "@/actions/users";
-import { auth } from "@/auth";
-import { Booking } from "./_components/book-button";
 import { currentUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Booking } from "./_components/book-button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const ListingPage = async () => {
   const session = await currentUser();
@@ -26,55 +37,100 @@ const ListingPage = async () => {
     },
   });
 
-  return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 p-4 bg-gradient-to-r bg-white pt-24 w-full h-full">
-      {listings.map((listing) => (
-        <Link href={`/listing/${listing.id}`} key={listing.id}>
-          <div className="p-4 bg-white rounded-md border border-slate-400 w-full h-64">
-            <h2 className="text-2xl font-semibold ">{listing.name}</h2>
-            <p className="text-gray-500">{listing.description}</p>
-            <p className="text-gray-500">Published by: {listing.user.name}</p>
-            <p className="text-gray-500">Venue: {listing?.venue?.name}</p>
-            <p className="text-gray-500">
-              Date:{" "}
-              {listing.date ? new Date(listing.date).toLocaleDateString() : ""}
+  if (listings.length === 0) {
+    return (
+      <div className="container mx-auto mt-24 p-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>No Events Available</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              There are currently no events scheduled. Please check back later!
             </p>
-            {listing.price !== null && listing.price > 0 ? (
-              <p className="text-gray-500">
-                Price of entry: UGX, {listing.price.toLocaleString()}
-              </p>
-            ) : (
-              <p className="text-gray-500">Event is free</p>
-            )}
-            <div className="flex justify-end"></div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
-            {session?.role === "ADMIN" ? (
-              // http://localhost:3000/admin/events/clxn8e0oi0003dzei5zwahusx
-              <Link href={`/admin/events/${listing.id}`}>
-                <Button>View</Button>
-              </Link>
-            ) : (
-              <div>
-                {listing.bookings.length > 0 ? (
-                  <div>
-                    <FormSuccess message="You are registered for this event " />
-                    <p className="text-gray-500 text-xs">
-                      Date Booked:{" "}
-                      {new Date(
-                        listing.bookings[0].createdAt
-                      ).toLocaleDateString()}
-                    </p>
-                  </div>
-                ) : (
-                  <Booking listingId={listing.id} userId={session?.id} />
-                )}
+  return (
+    <div className="container mx-auto mt-5 p-4">
+      <h1 className="text-3xl font-bold m-4">Events</h1>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {listings.map((listing) => (
+          <Card key={listing.id} className="h-full flex flex-col">
+            <CardHeader>
+              <CardTitle>{listing.name}</CardTitle>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <p className="text-gray-700 mb-4">{listing.description}</p>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  <span>Published by: {listing.user.name}</span>
+                </div>
+                <div className="flex items-center">
+                  <MapPinIcon className="mr-2 h-4 w-4" />
+                  <span>Venue: {listing?.venue?.name}</span>
+                </div>
+                <div className="flex items-center">
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <span>
+                    Date:{" "}
+                    {listing.date
+                      ? new Date(listing.date).toLocaleDateString()
+                      : "TBA"}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <TicketIcon className="mr-2 h-4 w-4" />
+                  <span>
+                    {listing.price !== null && listing.price > 0
+                      ? `Price: UGX ${listing.price.toLocaleString()}`
+                      : "Event is free"}
+                  </span>
+                </div>
               </div>
-            )}
-          </div>
-        </Link>
-      ))}
+            </CardContent>
+            <CardFooter className="flex justify-between items-center">
+              <Link href={`/listing/${listing.id}`} passHref>
+                <Button variant="secondary">View Details</Button>
+              </Link>
+              {session?.role === "ADMIN" ? (
+                <Link href={`/admin/events/${listing.id}`} passHref>
+                  <Button variant="secondary">Admin View</Button>
+                </Link>
+              ) : (
+                <BookingStatus listing={listing} session={session} />
+              )}
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
   );
+};
+
+const BookingStatus = ({
+  listing,
+  session,
+}: {
+  listing: any;
+  session: any;
+}) => {
+  if (listing.bookings.length > 0) {
+    return (
+      <Alert variant="default" className="m-2">
+        <CalendarRangeIcon className="h-4 w-4 mr-2" />
+        <AlertDescription>
+          Registered on{" "}
+          {new Date(listing.bookings[0].createdAt).toLocaleDateString()}
+        </AlertDescription>
+      </Alert>
+    );
+  }
+  return <Booking listingId={listing.id} userId={session?.id} />;
 };
 
 export default ListingPage;

@@ -16,10 +16,14 @@ export default auth((req) => {
   // regex for "/guest/.*" is used to check if the route is a guest route
   const guests = /^\/listing(\/.*)?/.test(nextUrl.pathname);
   const forgotPassword = "/forgot-password";
+  const adminRegister = "/auth/admin-register";
   // console.log("Session", req);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute =
-    publicRoutes.includes(nextUrl.pathname) || guests || forgotPassword;
+    publicRoutes.includes(nextUrl.pathname) ||
+    guests ||
+    forgotPassword ||
+    adminRegister;
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   if (isApiAuthRoute) {
     return null;

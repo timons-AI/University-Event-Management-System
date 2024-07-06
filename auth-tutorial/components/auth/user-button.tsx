@@ -20,9 +20,9 @@ export const UserButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className=" flex items-center gap-2">
-          <div className=" bg-purple-200 text-xs rounded-md p-1">
+          {/* <div className=" bg-purple-200 text-xs rounded-md p-1">
             {user?.role}
-          </div>
+          </div> */}
           <Avatar className=" border">
             <AvatarImage src={user?.image || ""} />
             <AvatarFallback className=" bg-primary">
@@ -47,9 +47,9 @@ export const UserButton = () => {
             </LogoutButton>
           </>
         ) : (
-          <DropdownMenuItem>
-            <Link href="/auth/login">Login</Link>
-          </DropdownMenuItem>
+          <Link href="/auth/login">
+            <DropdownMenuItem>Login</DropdownMenuItem>
+          </Link>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
