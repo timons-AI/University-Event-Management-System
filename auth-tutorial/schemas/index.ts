@@ -4,12 +4,21 @@ export const SettingsSchema = z.object({
   name: z.optional(z.string()),
 });
 
+// export const CreateEventSchema = z.object({
+//   name: z
+//     .string()
+//     .min(4, { message: "Minimum 4 characters required" })
+//     .regex(/^[a-zA-Z0-9]*$/, {
+//       message: "Only alphanumeric characters are allowed",
+//     }),
+// });
+
 export const CreateEventSchema = z.object({
   name: z
     .string()
     .min(4, { message: "Minimum 4 characters required" })
-    .regex(/^[a-zA-Z0-9]*$/, {
-      message: "Only alphanumeric characters are allowed",
+    .regex(/^[a-zA-Z0-9 ]*$/, {
+      message: "Only alphanumeric characters and spaces are allowed",
     }),
 });
 
